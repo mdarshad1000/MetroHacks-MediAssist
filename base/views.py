@@ -40,7 +40,6 @@ def home(request):
         return render(request, 'base/home.html')
 
 
-
 def upload(request):
     form = UploadForm
     model = Upload
@@ -88,3 +87,63 @@ def upload(request):
     
     context = {'form': form}
     return render(request, 'base/upload.html', context)
+
+
+def symptoms(request):
+
+    if request.method == 'POST':
+
+        symptoms = request.POST.getlist('symptoms')
+
+        response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=f"Example:\nPrompt:\nTell me the name of 2 or 3 medicine for Influenza\n\nResult:\n\n1. Oseltamivir (Tamiflu)\n\n2. Zanamivir (Relenza)\n\n3. Amantadine (Symmetrel)\n\n4. Rimantadine (Flumadine)\n\nPrompt:\nTell me the name of 2 or 3 medicine for Migraine\n\nResult:\n\n1. acetaminophen (Tylenol)\n\n2. ibuprofen (Advil, Motrin)\n\n3. naproxen (Aleve)\n\nPrompt:\nTell me the name of 2 or 3 medicine for Common Cold\n\nResult:\n\n1. acetaminophen (Tylenol)\n\n2. ibuprofen (Advil, Motrin)\n\n3. naproxen (Aleve)\n\n4. pseudoephedrine (Sudafed)\n\n5. dextromethorphan (Robitussin)\n\n6. guaifenesin (Mucinex)\n\n7. chlorpheniramine (Chlor-Trimeton)\n\n8. diphenhydramine (Benadryl)\n\n###\n\nPrompt:\nTell me the name of 2 or 3 medicine for {symptoms}\n\nResult:\n\n",
+        temperature=0.7,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+        )
+        print(symptoms)
+        final_answer = response["choices"][0]["text"]
+        arrayAnswer = list(final_answer.split("\n"))
+        
+        # Remove empty items
+        for item in arrayAnswer:
+            if item == '':
+                arrayAnswer.remove(item)
+
+        context = {'arrayAnswer': arrayAnswer}
+        return render(request, 'base/symptoms_result.html', context)
+
+
+    
+    return render(request, 'base/symptoms.html')
+
+
+
+def medicine(request):
+
+    if request.method == 'POST':
+        
+        medicine = request.POST.get('medicine')
+        print(medicine)
+        response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=f"Example:\nPrompt:\nExplain what does Crocin do in three sentences?\nGive me 3 alternative medicines of Crocin.\nSide effects of crocin?\n\nResult:\nCrocin is a medication that is used to treat pain and fever. It works by blocking the release of a substance in the body that causes pain and inflammation. Crocin is available in a tablet, capsule, and liquid form.\nALTERNATIVES: Ibuprofen | acetaminophen | Metacin\nSIDE EFFECTS: nausea vomiting constipation.\n\n###\n\nPrompt:\nExplain what does {medicine} in three sentences?\nGive me 3 alternative medicines of {medicine} .\nSide effects of {medicine}?\n\nResult:\n",
+        temperature=0.3,
+        max_tokens=500,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+        )
+
+        final_answer = response["choices"][0]["text"]
+        array_answer = final_answer.split("\n")
+
+        print(array_answer)
+        context = {'array_answer':array_answer, 'medicine':medicine}
+        return render(request, 'base/medicine_result.html', context)
+
+    return render(request, 'base/medicine.html')
+
