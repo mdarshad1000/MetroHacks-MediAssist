@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+</html>
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+  <script src="{% static 'js/script.js' %}" type="module"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+  <title>MediAssist | Result </title>
+</head>
+
+<body>
+  <canvas class="orb-canvas"></canvas>
+  <nav>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'upload' %}">Upload</a></li>
+      <li><a href="{% url 'symptoms' %}">Symptoms</a></li>
+      <li><a href="{% url 'medicine' %}">Search Meds</a></li>
+    </ul>
+  </nav>
+  <main>
+    <div class="details">
+      {% for item in arrayAnswer %}
+      {% if forloop.counter0|divisibleby:2 %}
+      <div>
+        <h1>{{item|capfirst}}</h1>
+        {% else %}
+        <p>{{item}}</p>
+        <hr>
+      </div>
+      {% endif %}
+      {% endfor %}
+  </main>
+  </div>
+</body>
+
+</html>

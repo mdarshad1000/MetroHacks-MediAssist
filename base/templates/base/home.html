@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}" />
+    <script src="{% static 'js/script.js' %}" type="module"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
+      rel="stylesheet"
+    />
+    <title>MediAssist | Home</title>
+  </head>
+
+  <body>
+    <!-- Canvas -->
+    <canvas class="orb-canvas"></canvas>
+    <!-- Overlay -->
+    <div class="overlay">
+      <!-- Overlay inner wrapper -->
+      <div class="overlay__inner">
+        <!-- Title -->
+        <h1 class="overlay__title">
+          Welcome to
+          <span class="text-gradient">MediAssist</span>
+        </h1>
+        <!-- Description -->
+        <p class="overlay__description">
+          One stop solution for
+          <strong>all your medicinal needs.</strong>
+        </p>
+        <!-- Buttons -->
+        <div class="overlay__btns">
+          <button class="overlay__btn overlay__btn--transparent">
+            <a href="{% url 'upload' %}">
+              Upload
+            </a>
+          </button>
+
+          <button class="overlay__btn overlay__btn--transparent">
+            <a href="{% url 'symptoms' %}">
+              Symptoms
+            </a>
+          </button>
+          <button class="overlay__btn overlay__btn--transparent">
+            <a href="{% url 'medicine' %}">Search Meds</a>
+          </button>
+        </div>
+      </div>
+      <!-- ADDED CHATBOT -->
+      <div style="margin-left: 12rem; border-radius: 25px;
+       border: 4px solid white; padding: 20px; width: 400px; height: auto;">
+        {% include 'base/chat.html' %}
+      </div>
+    </div>
+  </body>
+</html>

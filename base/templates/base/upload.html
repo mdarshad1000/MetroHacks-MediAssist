@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <script src="{% static 'js/script.js' %}" type="module"></script>
+    <script src="{% static 'js/main.js' %}" type="module"></script>
+    <title>MediAssist | Upload</title>
+  </head>
+
+  <body>
+    <canvas class="orb-canvas"></canvas>
+    <!-- Overlay -->
+    <div class="overlay">
+      <!-- Overlay inner wrapper -->
+      <div class="overlay__inner">
+        <!-- Title -->
+        <nav>
+          <ul>
+            <li class="text-gradient"><a href="{% url 'home' %}">Home</a></li>
+            <li class="text-gradient">
+              <a href="{% url 'upload' %}">Upload</a>
+            </li>
+            <li class="text-gradient">
+              <a href="{% url 'symptoms' %}">Symptoms</a>
+            </li>
+            <li class="text-gradient">
+              <a href="{% url 'medicine' %}">Search Meds</a>
+            </li>
+          </ul>
+        </nav>
+        <main class="details">
+          <form
+            class="form"
+            id="form"
+            action=""
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <p class="p">Upload Your Medicine Label</p>
+            <div data-text="Select your file!">
+              {{form.photo}}
+            </div>
+            <!-- <a class="" href="{% url 'home' %}">Cancel</a> -->
+            <button class="overlay__btn" type="submit" onclick="showAdvice()">
+              Submit
+            </button>
+          </form>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
